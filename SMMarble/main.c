@@ -54,7 +54,7 @@ int rolldie(int player)
     return (rand()%MAX_DIE + 1);
 }
 
-
+#if 0
 //action code when a player stays at a node
 void actionNode(int player)
 {
@@ -65,6 +65,7 @@ void actionNode(int player)
             break;
     }
 }
+#endif
 
 
 
@@ -75,6 +76,7 @@ int main(int argc, const char * argv[]) {
     int type;
     int credit;
     int energy;
+    int i;
     
     board_nr = 0;
     food_nr = 0;
@@ -93,15 +95,19 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("Reading board component......\n");
-    while () //read a node parameter set
+    while ( fscanf(fp, "%s %i %i %i", name, &type, &credit, &energy) == 4 ) //read a node parameter set
     {
         //store the parameter set
+        smmObj_genNode(name, type, credit, energy);
+        board_nr++;
     }
     fclose(fp);
     printf("Total number of board nodes : %i\n", board_nr);
     
+    for (i = 0;i<board_nr;i++)
+        printf("node %i : %s, %i\n", i, smmObj_getNodeName(i), smmObj_getNodeType(i));
     
-    
+    #if 0
     //2. food card config 
     if ((fp = fopen(FOODFILEPATH,"r")) == NULL)
     {
@@ -166,6 +172,7 @@ int main(int argc, const char * argv[]) {
         //4-5. next turn
         
     }
-    
+    #endif
+    system("PAUSE");
     return 0;
 }
