@@ -14,6 +14,22 @@
 #define MAX_NODE        100
 
 
+static char smmNodeName[SMMNODE_TYPE_MAX][MAX_CHARNAME] = {
+       "����",
+       "�Ĵ�",
+       "�����",
+       "��",
+       "����Ƿ��̵�",
+       "��������",
+       "�����ð�"
+};
+
+char* smmObj_getTypeName(int type)
+{
+      return (char*)smmNodeName[type];
+}
+
+
 static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
 static int smmObj_credit[MAX_NODE];
@@ -35,7 +51,7 @@ void smmObj_genNode(char* name, int type, int credit, int energy)
 
 char* smmObj_getNodeName(int node_nr)
 {
-    return smmObj_name[smmObj_noNode];
+    return smmObj_name[node_nr];
 }
 
 int smmObj_getNodeType(int node_nr)
