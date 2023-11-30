@@ -48,7 +48,7 @@ void generatePlayers(int n, int initEnergy) //generate a new player
      for (i=0;i<n;i++)
      {
          //input name
-         printf(); //�ȳ� ���� 
+         printf();
          scanf("%s", player_name[i]);
          fflush(stdin);
          
