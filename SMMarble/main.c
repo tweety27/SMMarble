@@ -26,13 +26,13 @@ static int player_nr;
 
 //node definition for player status
 typedef struct player {
-        int energy;
-        int position;
-        char name[MAX_CHARNAME];
-        int accumCredit;
-        int flag_graduate;
-        char takenLectures[MAX_TAKENLECTURE][MAX_CHARNAME]; // 이전에 수강한 강의 목록 저장
-        int numTakenLectures; //현재까지 들은 강의 수
+    int energy;
+    int position;
+    char name[MAX_CHARNAME];
+    int accumCredit;
+    int flag_graduate;
+    char takenLectures[MAX_TAKENLECTURE][MAX_CHARNAME]; // 이전에 수강한 강의 목록 저장
+    int numTakenLectures; //현재까지 들은 강의 수
 } player_t;
 
 //pointer for current player status
@@ -115,6 +115,7 @@ float calcAverageGrade(int player) {
         totalGrade += smmObj_getNodeGrade(gradePtr);
     }
 
+    // 평균 성적 return
     return totalGrade / numGrades;
 }
 
@@ -203,7 +204,7 @@ void generatePlayers(int n, int initEnergy)
 int rolldie(int player)
 {
     char c;
-    printf(" Press any key to roll a die (press g to see grade): ");
+    printf(" \nPress any key to roll a die (press g to see grade): ");
     c = getchar();
     fflush(stdin);
 
@@ -249,15 +250,44 @@ void actionNode(int player)
             void* foodCardObj = smmdb_getData(LISTNO_FOODCARD, randomFoodIndex);
 
             // 보충 에너지를 가져와서 현재 에너지 추가
-            int replenishEnergy = smmObj_getNodeEnergy(foodCardObj);
-            cur_player[player].energy += replenishEnergy;
+            int reEnergy = smmObj_getNodeEnergy(foodCardObj);
+            cur_player[player].energy += reEnergy;
 
             // 선택된 음식 카드 정보 출력
             char* foodCardName = smmObj_getNodeName(foodCardObj);
-            printf("먹은 음식은 %s이고, 충전된 에너지는 %d입니다.\n", foodCardName, replenishEnergy);
+            printf("먹은 음식은 %s이고, 충전된 에너지는 %d입니다.\n", foodCardName, reEnergy);
 
             break;
         }
+
+        //case festival
+        case SMMNODE_TYPE_FESTIVAL:
+        {
+            // 미션 정보를 저장할 배열 선언
+            char mission[100];
+
+            // 축제 카드 리스트에서 랜덤으로 미션 선택
+            int randomFestIndex = rand() % festival_nr;
+            void* festCardObj = smmdb_getData(LISTNO_FESTCARD, randomFestIndex);
+
+            // 선택된 음식 카드 정보 출력
+            char* festCardName = smmObj_getNodeName(festCardObj);
+            printf("미션: %s\n", festCardName);
+
+            printf("\n-----------미션을 수행해주세요!-----------\n");
+            scanf("%s", mission);
+
+            while(getchar() != '\n');
+
+            break;
+        }
+
+        //case laboratory
+        case SMMNODE_TYPE_LABORATORY:
+        
+
+        //case gotolab
+        case SMMNODE_TYPE_GOTOLAB:
 
         default:
             break;
