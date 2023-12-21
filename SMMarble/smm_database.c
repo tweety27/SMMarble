@@ -2,7 +2,7 @@
 //  smm_database.c
 //  Sookmyung Marble
 //  Database platform code for storing marble board elements
-//  Created by Juyeop Kim on 2023/11/05.
+//  Created by Seoyeon Kim
 //
 
 #include "smm_common.h"
@@ -15,8 +15,8 @@
 typedef struct node{
     int index;      //index of the node
     void* obj;      //object data
-    void* next;         //pointer to the next
-    void* prev;         //pointer to the next
+    void* next;     //pointer to the next
+    void* prev;     //pointer to the prev
 } node_t;
 
 
