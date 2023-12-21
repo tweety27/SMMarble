@@ -309,20 +309,23 @@ void actionNode(int player)
         //case laboratory
         case SMMNODE_TYPE_LABORATORY:
         {
+            // 실험 상태면 실험 시작
             if(cur_player[player].experiment_in_progress == 1)
             {
                 printf("----------실험을 시작합니다----------\n");
+                // 실험 할 때마다 에너지 감소
                 cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
 
+                // 주사위 던지기
                 int rollNum = (rand()%MAX_DIE + 1);
                 printf("주사위는 %d가 나왔습니다.\n", rollNum);
                 
+                // 주사위 숫자가 실험 성공 조건과 맞는지 체크
                 if(rollNum == cur_player[player].experiment_die_num)
                 {
                     // 실험 성공
                     printf("실험 성공\n");
                     cur_player[player].experiment_in_progress = 0;
-
                     break;
                 }
                 else
@@ -331,12 +334,15 @@ void actionNode(int player)
                     printf("실험 실패\n");
                     cur_player[player].position = 8;
                     cur_player[player].experiment_in_progress = 1;
+                    break;
                 }
             }
+            // 실험 상태가 아닐 때는 코드 실행하지 않고 break
             else 
             {
                 break;
             }
+
         }
     }
 }
