@@ -18,6 +18,4 @@
 #define MAX_PLAYER                  100
 #define MAX_TAKENLECTURE            30
 
-#define EXPERIMENT_SUCCESS_NUM      3
-
 #endif /* smm_common_h */
